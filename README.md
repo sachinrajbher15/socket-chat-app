@@ -16,23 +16,24 @@ A simple WhatsApp-like chat application built with **Node.js**, **Express.js**, 
 ---
 
 ## ➡️ SCREENSHOTS
-👉 Home page
-![](sreenshots/1homepage.png)
 
-👉 After sending some messages
-![](sreenshots/2sentmessages.png)
+👉 Home page  
+![](screenshots/1homepage.png)
 
-👉 Requesting to edit a message
-![](sreenshots/3editmessage.png)
+👉 After sending some messages  
+![](screenshots/2sentmessages.png)
 
-👉 Message updated
-![](sreenshots/4messageupdated.png)
+👉 Requesting to edit a message  
+![](screenshots/3editmessage.png)
 
-👉 Requesting to delete a message
-![](sreenshots/5deletemessage.png)
+👉 Message updated  
+![](screenshots/4messageupdated.png)
 
-👉 Message deleted
-![](sreenshots/6messagedeleted.png)
+👉 Requesting to delete a message  
+![](screenshots/5deletemessage.png)
+
+👉 Message deleted  
+![](screenshots/6messagedeleted.png)
 
 ---
 
