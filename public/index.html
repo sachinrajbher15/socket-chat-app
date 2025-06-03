@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Chat App</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #messages div { padding: 6px; border-bottom: 1px solid #ccc; }
+    input { padding: 6px; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Mini Chat App</h2>
+  <input id="messageInput" placeholder="Type a message..." />
+  <button onclick="send()">Send</button>
+  <div id="messages"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const messagesDiv = document.getElementById('messages');
+    const input = document.getElementById('messageInput');
+
+    socket.on('loadMessages', msgs => render(msgs));
+    socket.on('newMessage', msg => addMessage(msg));
+    socket.on('messagesUpdated', msgs => render(msgs));
+
+    function send() {
+      if (input.value.trim()) {
+        socket.emit('sendMessage', input.value.trim());
+        input.value = '';
+      }
+    }
+
+    function render(msgs) {
+      messagesDiv.innerHTML = '';
+      msgs.forEach(msg => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <span>${msg.text}</span>
+          <button onclick="edit(${msg.id}, '${msg.text}')">Edit</button>
+          <button onclick="del(${msg.id})">Delete</button>
+        `;
+        messagesDiv.appendChild(div);
+      });
+    }
+
+    function addMessage(msg) {
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <span>${msg.text}</span>
+        <button onclick="edit(${msg.id}, '${msg.text}')">Edit</button>
+        <button onclick="del(${msg.id})">Delete</button>
+      `;
+      messagesDiv.appendChild(div);
+    }
+
+    function edit(id, text) {
+      const newText = prompt("Edit your message:", text);
+      if (newText) {
+        socket.emit('updateMessage', { id, text: newText });
+      }
+    }
+
+    function del(id) {
+      if (confirm("Delete this message?")) {
+        socket.emit('deleteMessage', id);
+      }
+    }
+  </script>
+</body>
+</html>
